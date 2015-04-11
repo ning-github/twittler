@@ -51,10 +51,10 @@ for(var i = 0; i < 10; i++){
 }
 
 var scheduleNextTweet = function(){
-  generateRandomTweet();
-  setTimeout(scheduleNextTweet, Math.random() * 1500);
-};
-scheduleNextTweet();
+  generateRandomTweet();  //creates a random tweet FIRST, 
+  setTimeout(scheduleNextTweet, Math.random() * 1500);  //THEN sets delay
+};                              
+scheduleNextTweet();  //this is why intial display shows 11 instead of 10
 
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)

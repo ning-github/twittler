@@ -5,23 +5,57 @@
     <script src="data_generator.js"></script>
   </head>
   <body>
+
+    <button>Show new tweets</button>
+
+    <section class = "feed">Feed</section>    
+
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+        var $feed = $('.feed');
+        $feed.html('');
 
         var index = streams.home.length - 1;
+
+        //to keep track of what is old versus new
+        var currentFeed = [];
+
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.appendTo($feed);
+          currentFeed.push(tweet);  //store as old tweet
           index -= 1;
         }
+
+        /////////////////////////////
+        $("button").on("click", function(){
+          //find 
+          var newTweets = streams.home.filter(function(each){
+            return (currentFeed.indexOf(each) === -1);
+          });
+
+          //to help see what is current vs total vs new
+          console.log("currentFeed");
+          console.log(currentFeed);
+          console.log(currentFeed.length);
+          console.log("stream.home");
+          console.log(streams.home);
+          console.log((streams.home).length);
+          console.log("newTweets");
+          console.log(newTweets);
+          console.log(newTweets.length);
+          console.log("____________________________________________________");
+
+        });
+
 
       });
 
     </script>
+
+
   </body>
 </html>
