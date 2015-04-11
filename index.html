@@ -24,8 +24,17 @@
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
+
+          //timestamp
+          var timestamp = tweet.created_at;
+          var $timestamp = $("<div></div>");
+
           $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $timestamp.text(timestamp);
+
+          $timestamp.appendTo($tweet);
           $tweet.appendTo($feed);
+
           currentFeed.push(tweet);  //store as old tweet
           index -= 1;
         }
@@ -39,7 +48,15 @@
 
           newTweets.forEach(function(eachTweet){
             var $tweetToAdd = $("<div></div>");
+
+            var timestamp = eachTweet.created_at;
+            var $timestamp = $("<div></div>");
+
             $tweetToAdd.text("@"+eachTweet.user+": " + eachTweet.message);
+            $timestamp.text(timestamp);
+
+            $timestamp.appendTo($tweetToAdd);
+
             $tweetToAdd.prependTo($feed); //reverse chronological order (recent is at top);
             currentFeed.push(eachTweet);
           });
@@ -56,13 +73,8 @@
           // console.log(newTweets.length);
           // console.log("____________________________________________________");
 
-          //testing to find date
-          (currentFeed).forEach(function(eachTweet){
-            console.log(eachTweet);
-          });
-          console.log("____________________________________________________");
-          
         });
+
 
 
       });
