@@ -2,6 +2,8 @@
 <html>
   <head>
     <script src="jquery.js"></script>
+    <!-- timeago library for human friendly fuzzy times -->
+    <script src = "http://timeago.yarp.com/jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
   </head>
   <body>
@@ -44,15 +46,12 @@
 
           var index = streams.home.length - 1;
 
-          //to keep track of what is old versus new
-          var currentFeed = [];
-
           while(index >= 0){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
 
-            //timestamp
-            var timestamp = tweet.created_at;
+            //timestamp, using timeago to convert created_at property
+            var timestamp = $.timeago(tweet.created_at);  
             var $timestamp = $("<div></div>");
 
             $tweet.text('@' + tweet.user + ': ' + tweet.message);
@@ -61,7 +60,6 @@
             $timestamp.appendTo($tweet);
             $tweet.appendTo($feed);
 
-            currentFeed.push(tweet);  //store as old tweet
             index -= 1;
           }
         }
