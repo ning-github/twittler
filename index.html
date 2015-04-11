@@ -14,52 +14,84 @@
 
       $(document).ready(function(){
         var $feed = $('.feed');
-        $feed.html('');
+        // $feed.html('');
 
-        var index = streams.home.length - 1;
+        // var index = streams.home.length - 1;
 
-        //to keep track of what is old versus new
-        var currentFeed = [];
+        // //to keep track of what is old versus new
+        // var currentFeed = [];
 
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
+        // while(index >= 0){
+        //   var tweet = streams.home[index];
+        //   var $tweet = $('<div></div>');
 
-          //timestamp
-          var timestamp = tweet.created_at;
-          var $timestamp = $("<div></div>");
+        //   //timestamp
+        //   var timestamp = tweet.created_at;
+        //   var $timestamp = $("<div></div>");
 
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $timestamp.text(timestamp);
+        //   $tweet.text('@' + tweet.user + ': ' + tweet.message);
+        //   $timestamp.text(timestamp);
 
-          $timestamp.appendTo($tweet);
-          $tweet.appendTo($feed);
+        //   $timestamp.appendTo($tweet);
+        //   $tweet.appendTo($feed);
 
-          currentFeed.push(tweet);  //store as old tweet
-          index -= 1;
+        //   currentFeed.push(tweet);  //store as old tweet
+        //   index -= 1;
+        // }
+
+        var refreshFeed = function(){
+          $feed.html('');
+
+          var index = streams.home.length - 1;
+
+          //to keep track of what is old versus new
+          var currentFeed = [];
+
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+
+            //timestamp
+            var timestamp = tweet.created_at;
+            var $timestamp = $("<div></div>");
+
+            $tweet.text('@' + tweet.user + ': ' + tweet.message);
+            $timestamp.text(timestamp);
+
+            $timestamp.appendTo($tweet);
+            $tweet.appendTo($feed);
+
+            currentFeed.push(tweet);  //store as old tweet
+            index -= 1;
+          }
         }
+
+        refreshFeed();
 
         /////////////////////////////
         $("button").on("click", function(){
-          //find 
-          var newTweets = streams.home.filter(function(each){
-            return (currentFeed.indexOf(each) === -1);
-          });
+          // var newTweets = streams.home.filter(function(each){
+          //   return (currentFeed.indexOf(each) === -1);
+          // });
 
-          newTweets.forEach(function(eachTweet){
-            var $tweetToAdd = $("<div></div>");
+          // newTweets.forEach(function(eachTweet){
+          //   var $tweetToAdd = $("<div></div>");
 
-            var timestamp = eachTweet.created_at;
-            var $timestamp = $("<div></div>");
+          //   var timestamp = eachTweet.created_at;
+          //   var $timestamp = $("<div></div>");
 
-            $tweetToAdd.text("@"+eachTweet.user+": " + eachTweet.message);
-            $timestamp.text(timestamp);
+          //   $tweetToAdd.text("@"+eachTweet.user+": " + eachTweet.message);
+          //   $timestamp.text(timestamp);
 
-            $timestamp.appendTo($tweetToAdd);
+          //   $timestamp.appendTo($tweetToAdd);
 
-            $tweetToAdd.prependTo($feed); //reverse chronological order (recent is at top);
-            currentFeed.push(eachTweet);
-          });
+          //   $tweetToAdd.prependTo($feed); //reverse chronological order (recent is at top);
+          //   currentFeed.push(eachTweet);
+
+
+
+
+          // });
 
           //to help see what is current vs total vs new
           // console.log("currentFeed");
@@ -72,6 +104,8 @@
           // console.log(newTweets);
           // console.log(newTweets.length);
           // console.log("____________________________________________________");
+
+          refreshFeed();
 
         });
 
