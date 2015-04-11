@@ -8,7 +8,7 @@
 
     <button>Show new tweets</button>
 
-    <section class = "feed">Feed</section>    
+    <section class = "feed"></section>    
 
     <script>
 
@@ -35,6 +35,13 @@
           //find 
           var newTweets = streams.home.filter(function(each){
             return (currentFeed.indexOf(each) === -1);
+          });
+
+          newTweets.forEach(function(eachTweet){
+            var $tweetToAdd = $("<div></div>");
+            $tweetToAdd.text("@"+eachTweet.user+": " + eachTweet.message);
+            $tweetToAdd.prependTo($feed); //reverse chronological order (recent is at top);
+            currentFeed.push(eachTweet);
           });
 
           //to help see what is current vs total vs new
