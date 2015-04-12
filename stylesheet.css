@@ -1,0 +1,12 @@
+section {
+  display:inline-block;
+}
+
+ul {
+  display:inline-block;
+  float:right;
+}
+
+li {
+  cursor:pointer;
+}

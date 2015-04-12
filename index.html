@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="jquery.js"></script>
     <!-- timeago library for human friendly fuzzy times -->
     <script src = "http://timeago.yarp.com/jquery.timeago.js"></script>
@@ -8,46 +9,30 @@
   </head>
   <body>
 
-    <button>Show new tweets</button>
 
-    <section class = "feed"></section>    
+    <section>
+      <button>Show new tweets</button>
+      <div class = "feed"></div>
+    </section>
+
+    <ul>Users</ul>    
+
+
+
 
     <script>
 
       $(document).ready(function(){
         var $feed = $('.feed');
-        // $feed.html('');
 
-        // var index = streams.home.length - 1;
+        var refreshFeed = function(input){   
 
-        // //to keep track of what is old versus new
-        // var currentFeed = [];
-
-        // while(index >= 0){
-        //   var tweet = streams.home[index];
-        //   var $tweet = $('<div></div>');
-
-        //   //timestamp
-        //   var timestamp = tweet.created_at;
-        //   var $timestamp = $("<div></div>");
-
-        //   $tweet.text('@' + tweet.user + ': ' + tweet.message);
-        //   $timestamp.text(timestamp);
-
-        //   $timestamp.appendTo($tweet);
-        //   $tweet.appendTo($feed);
-
-        //   currentFeed.push(tweet);  //store as old tweet
-        //   index -= 1;
-        // }
-
-        var refreshFeed = function(){
           $feed.html('');
 
-          var index = streams.home.length - 1;
+          var index = input.length - 1;
 
           while(index >= 0){
-            var tweet = streams.home[index];
+            var tweet = input[index];
             var $tweet = $('<div></div>');
 
             //timestamp, using timeago to convert created_at property
@@ -64,50 +49,34 @@
           }
         }
 
-        refreshFeed();
+        refreshFeed(streams.home);
 
         /////////////////////////////
         $("button").on("click", function(){
-          // var newTweets = streams.home.filter(function(each){
-          //   return (currentFeed.indexOf(each) === -1);
-          // });
 
-          // newTweets.forEach(function(eachTweet){
-          //   var $tweetToAdd = $("<div></div>");
-
-          //   var timestamp = eachTweet.created_at;
-          //   var $timestamp = $("<div></div>");
-
-          //   $tweetToAdd.text("@"+eachTweet.user+": " + eachTweet.message);
-          //   $timestamp.text(timestamp);
-
-          //   $timestamp.appendTo($tweetToAdd);
-
-          //   $tweetToAdd.prependTo($feed); //reverse chronological order (recent is at top);
-          //   currentFeed.push(eachTweet);
-
-
-
-
-          // });
-
-          //to help see what is current vs total vs new
-          // console.log("currentFeed");
-          // console.log(currentFeed);
-          // console.log(currentFeed.length);
-          // console.log("stream.home");
-          // console.log(streams.home);
-          // console.log((streams.home).length);
-          // console.log("newTweets");
-          // console.log(newTweets);
-          // console.log(newTweets.length);
-          // console.log("____________________________________________________");
-
-          refreshFeed();
+          refreshFeed(streams.home);
 
         });
 
 
+
+        //initial list of users
+        var $ul = $("ul");
+        for (var user in streams.users){
+          var $eachUser = $("<li></li>");
+          $eachUser.text(user);
+          $eachUser.appendTo($ul);
+        }
+
+        //swtiches feed to that user when a user is clicked
+        $("li").on("click",function(){
+          var name = $(this).text();
+          refreshFeed(streams.users[name]);
+
+        })
+
+
+        
 
       });
 
