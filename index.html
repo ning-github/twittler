@@ -9,11 +9,7 @@
   </head>
   <body>
 
-
-    <section>
-      <button>Show new tweets</button>
-      <div class = "feed"></div>
-    </section>
+    <section class = "feed"></section>
 
     <ul>Users</ul>    
 
@@ -51,14 +47,11 @@
 
         refreshFeed(streams.home);
 
-        /////////////////////////////
-        $("button").on("click", function(){
 
+        //mainfeed auto refresh
+        var autoFeed = setInterval(function(){
           refreshFeed(streams.home);
-
-        });
-
-
+        },1500);
 
         //initial list of users
         var $ul = $("ul");
@@ -70,13 +63,16 @@
 
         //swtiches feed to that user when a user is clicked
         $("li").on("click",function(){
+          clearTimeout(autoFeed); //stops mainFeed autorefresh
           var name = $(this).text();
+
           refreshFeed(streams.users[name]);
+          autoFeed = setInterval(function(){
+          refreshFeed(streams.users[name]);
+        },1500);
 
         })
 
-
-        
 
       });
 
