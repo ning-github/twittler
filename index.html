@@ -20,8 +20,12 @@
 
       $(document).ready(function(){
         var $feed = $('.feed');
+    
+        var currentMainFeed = []; //to track what is old vs new. 
+        //  ^--this helps with later checking of whether to call refreshFeed
 
-        var refreshFeed = function(input){   
+
+        var refreshFeed = function(input, currentFeed){   
 
           $feed.html('');
 
@@ -42,16 +46,22 @@
             $tweet.appendTo($feed);
 
             index -= 1;
+            currentFeed.push(tweet);  // tweet is stored as old
           }
         }
 
-        refreshFeed(streams.home);
+        refreshFeed(streams.home, currentMainFeed);
 
 
         //mainfeed auto refresh
+
         var autoFeed = setInterval(function(){
-          refreshFeed(streams.home);
+          if ((streams.home).length > currentMainFeed.length){  //this check will help us not call refreshFeed unless needed
+            currentMainFeed = []; //this clear is required, as refreshFeed will push the WHOLE contents (new and old)
+            refreshFeed(streams.home, currentMainFeed);
+          }
         },1500);
+
 
         //initial list of users
         var $ul = $("ul");
@@ -61,15 +71,20 @@
           $eachUser.appendTo($ul);
         }
 
-        //swtiches feed to that user when a user is clicked
+        //switches feed to that user when a user is clicked
         $("li").on("click",function(){
-          clearTimeout(autoFeed); //stops mainFeed autorefresh
+          clearInterval(autoFeed); //stops mainFeed autorefresh
           var name = $(this).text();
 
-          refreshFeed(streams.users[name]);
+          var currentUserFeed=[]; // like the main version, but for each user click
+
+          refreshFeed(streams.users[name], currentUserFeed); //run immediately, since the below code must wait the delay time to run for the first time
           autoFeed = setInterval(function(){
-          refreshFeed(streams.users[name]);
-        },1500);
+            if ((streams.users[name]).length > currentUserFeed.length){
+              currentUserFeed = []; 
+              refreshFeed(streams.users[name], currentUserFeed);
+            }
+          },1500);
 
         })
 

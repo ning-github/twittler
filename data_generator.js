@@ -51,8 +51,8 @@ for(var i = 0; i < 10; i++){
 }
 
 var scheduleNextTweet = function(){
-  generateRandomTweet();  //creates a random tweet FIRST, 
-  setTimeout(scheduleNextTweet, Math.random() * 1500);  //THEN sets delay
+  generateRandomTweet();  //creates a random tweet FIRST, THEN sets delay below
+  setTimeout(scheduleNextTweet, Math.random() * 1500 + 1500); //added +1500 to set a floor (helps with testing and refresh checking)
 };                              
 scheduleNextTweet();  //this is why intial display shows 11 instead of 10
 
