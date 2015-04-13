@@ -1,12 +1,37 @@
-section {
-  display:inline-block;
+section  {
+  text-align: center;
+  border:1px solid green;
+}
+
+.feed {
+  border: 1px solid blue;
+  text-align:left;
+  /* for viewport adjustment*/
+  height: 70vh; 
+  overflow:scroll;
+}
+
+/*scroll bar on feed*/
+.feed::-webkit-scrollbar {
+    width: 0.5em;
+}
+ 
+.feed::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+
+.users  {
+  border: 1px solid red;
 }
 
 ul {
-  display:inline-block;
-  float:right;
+  text-align: center;
 }
 
 li {
+  text-align: left;
   cursor:pointer;
 }
+
+

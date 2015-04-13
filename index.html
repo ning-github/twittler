@@ -2,16 +2,31 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <script src="jquery.js"></script>
     <!-- timeago library for human friendly fuzzy times -->
     <script src = "http://timeago.yarp.com/jquery.timeago.js"></script>
     <script src="data_generator.js"></script>
+    <script src= "bootstrap.min.js"></script>
   </head>
   <body>
 
-    <section class = "feed"></section>
+    
+    <div class = "container">
+      <h1>Twittler</h1>
+      
+      <section class = "twittle">Twittle</section>
 
-    <ul>Users</ul>    
+
+      <section class = "col-md-3 users"> Users
+        <ul></ul>    
+      </section>
+
+      
+
+
+      <section class = "feed col-md-9"></section>
+    <div>
 
 
 
@@ -86,7 +101,13 @@
             }
           },1500);
 
-        })
+        });
+
+        $("h1").on("click", function(){
+
+        });
+
+
 
 
       });
