@@ -106,10 +106,20 @@
 
         });
 
+        // return to main feed
         $("h1").on("click", function(){
-
+          clearInterval(autoFeed);
+          currentMainFeed = []; //crucial to clear before refreshing
+          refreshFeed(streams.home, currentMainFeed);
+          autoFeed = setInterval(function(){
+            if ((streams.home).length > currentMainFeed.length){
+              currentMainFeed = [];
+              refreshFeed(streams.home, currentMainFeed);
+            }
+          },1500);
         });
 
+        // clicked on submit button for user tweet
 
 
 
