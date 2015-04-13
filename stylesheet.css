@@ -1,6 +1,10 @@
+body  {
+  background-color: #3F514C;
+  color: white;
+}
+
 section  {
   text-align: center;
-  border:1px solid green;
 }
 
 h1  {
@@ -8,7 +12,6 @@ h1  {
 }
 
 .feed {
-  border: 1px solid blue;
   text-align:left;
   /* for viewport adjustment*/
   height: 70vh; 
@@ -24,9 +27,10 @@ h1  {
   background-color: darkgrey;
 }
 
-
-.users  {
-  border: 1px solid red;
+.userHead {
+  font-size: 18px;
+  font-family: futura;
+  background-color: red;
 }
 
 ul {
@@ -34,8 +38,12 @@ ul {
 }
 
 li {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding-top:5px;
+  list-style-type: none;
   text-align: left;
   cursor:pointer;
+  font-size: 14px;
 }
 
 #message {
@@ -43,7 +51,29 @@ li {
 }
 
 .twittle  {
-  padding: 2% 0;
+  padding: 1.5% 0;
+  background-color: green;
 }
 
+input, button {
+  color:black;
+}
 
+.feed div {
+  padding: 5px 9px;
+  background-color: rgb(29, 29, 124);
+  margin:2% 0;
+}
+
+.userHead, .twittle, .feed div  {
+  border-radius: 5px;
+}
+
+.feed div >div  {
+  color:honeydew;
+  background-color:grey;
+}
+
+.users {
+  margin:2% 0;
+}
