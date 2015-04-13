@@ -3,6 +3,10 @@ section  {
   border:1px solid green;
 }
 
+h1  {
+  cursor: pointer;
+}
+
 .feed {
   border: 1px solid blue;
   text-align:left;
@@ -36,6 +40,10 @@ li {
 
 #message {
   width:40%;
+}
+
+.twittle  {
+  padding: 2% 0;
 }
 
 

@@ -10,31 +10,25 @@
     <script src= "bootstrap.min.js"></script>
   </head>
   <body>
-
-    
     <div class = "container">
       <h1>Twittler</h1>
       
       <section class = "twittle">
         my name is @<input type = "text" id="name">
-        and my message is <input type = "text" id="message">
+        and my message is <input type ="text" id="message">
+        <button> tell the world </button>
       </section>
-
 
       <section class = "col-md-3 users"> Users
         <ul></ul>    
       </section>
 
-      
-
-
       <section class = "feed col-md-9"></section>
     <div>
 
-
-
-
     <script>
+      //global visitor variable for writeTweet
+      var visitor = "guest";
 
       $(document).ready(function(){
         var $feed = $('.feed');
@@ -42,9 +36,7 @@
         var currentMainFeed = []; //to track what is old vs new. 
         //  ^--this helps with later checking of whether to call refreshFeed
 
-
         var refreshFeed = function(input, currentFeed){   
-
           $feed.html('');
 
           var index = input.length - 1;
@@ -68,18 +60,17 @@
           }
         }
 
+        //intial feed display
         refreshFeed(streams.home, currentMainFeed);
 
 
         //mainfeed auto refresh
-
         var autoFeed = setInterval(function(){
           if ((streams.home).length > currentMainFeed.length){  //this check will help us not call refreshFeed unless needed
             currentMainFeed = []; //this clear is required, as refreshFeed will push the WHOLE contents (new and old)
             refreshFeed(streams.home, currentMainFeed);
           }
         },1500);
-
 
         //initial list of users
         var $ul = $("ul");
@@ -88,23 +79,6 @@
           $eachUser.text(user);
           $eachUser.appendTo($ul);
         }
-
-        //switches feed to that user when a user is clicked
-        $("li").on("click",function(){
-          clearInterval(autoFeed); //stops mainFeed autorefresh
-          var name = $(this).text();
-
-          var currentUserFeed=[]; // like the main version, but for each user click
-
-          refreshFeed(streams.users[name], currentUserFeed); //run immediately, since the below code must wait the delay time to run for the first time
-          autoFeed = setInterval(function(){
-            if ((streams.users[name]).length > currentUserFeed.length){
-              currentUserFeed = []; 
-              refreshFeed(streams.users[name], currentUserFeed);
-            }
-          },1500);
-
-        });
 
         // return to main feed
         $("h1").on("click", function(){
@@ -120,11 +94,55 @@
         });
 
         // clicked on submit button for user tweet
+        $("button").on("click", function(){   
+          var userHandle = $("#name").val();
+          var userMessage = $("#message").val();
 
+          if (userHandle !== undefined){
+            visitor = userHandle;
+          }
 
+          if (!(visitor in streams.users)){
+            streams.users[visitor] = [];
+          }
+
+          writeTweet(userMessage);
+
+          //give the tweet its creation time
+          var lastIndex = (streams.users[visitor]).length -1;
+          var latestTweet = (streams.users[visitor])[lastIndex];
+          latestTweet.created_at = new Date();
+
+          // update list of users
+          $ul.html('');
+          for (var user in streams.users){
+            var $eachUser = $("<li></li>");
+            $eachUser.text(user);
+            $eachUser.appendTo($ul);
+          }
+
+          //clear input fields
+          $("#name").val('');
+          $("#message").val('');
+        });
+
+        //switches feed to that user when a user is clicked
+        $("ul").on("click","li",function(){
+          clearInterval(autoFeed); //stops mainFeed autorefresh
+          var name = $(this).text();
+
+          var currentUserFeed=[]; // like the main version, but for each user click
+
+          refreshFeed(streams.users[name], currentUserFeed); //run immediately, since the below code must wait the delay time to run for the first time
+          autoFeed = setInterval(function(){
+            if ((streams.users[name]).length > currentUserFeed.length){
+              currentUserFeed = []; 
+              refreshFeed(streams.users[name], currentUserFeed);
+            }
+          },1500);
+        });
 
       });
-
     </script>
 
 
